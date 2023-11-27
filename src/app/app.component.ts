@@ -18,15 +18,28 @@ import {
 import { ExpandMode } from '@syncfusion/ej2-navigations';
 import { paletteIconClick } from './script/diagram-common';
 import { AsyncSettingsModel } from '@syncfusion/ej2-inputs';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import {
+  Diagram,
+  NodeModel,
+  HtmlModel,
+  TextStyleModel,
+} from '@syncfusion/ej2-diagrams';
+import { CommonModule } from '@angular/common';
+import { RepairStatusChangeComponent } from './nodes/repair-status-change/repair-status-change.component';
+
 Diagram.Inject(UndoRedo);
 
 /**
  * Default FlowShape sample
  */
 
+
 @Component({
   standalone: true,
-  imports: [DiagramAllModule, SymbolPaletteAllModule, OverviewAllModule, ColorPickerModule, ToolbarModule, DropDownButtonModule, UploaderModule, TextBoxModule, SplitButtonModule, NumericTextBoxModule, TreeViewModule],
+  imports: [CommonModule, DiagramAllModule, SymbolPaletteAllModule, OverviewAllModule, ColorPickerModule, ToolbarModule, DropDownButtonModule, UploaderModule, TextBoxModule, SplitButtonModule, NumericTextBoxModule, TreeViewModule, DropdownModule, FormsModule, ButtonModule, RepairStatusChangeComponent],
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
@@ -40,6 +53,14 @@ export class AppComponent {
   public toolbar: ToolbarComponent;
   constructor(private renderer: Renderer2, private el: ElementRef) { }
 
+  public shape: HtmlModel = {
+    type:'HTML'
+};
+
+public shape1: HtmlModel = {
+  type:'HTML',
+  content:"<div style='background:red;height:100%;width:100%;'><input type='button' value='{{:value}}' /></div>",
+};
   ngAfterViewInit() {
     document.addEventListener("DOMContentLoaded", () => {
       const removingDiv = document.querySelector('div[style*="z-index: 999999999;"]')
@@ -74,16 +95,17 @@ export class AppComponent {
     if (node.width === undefined) {
       node.width = 145;
     }
-    node.style = { fill: '#357BD2', strokeColor: 'white' };
-    for (let i: number = 0; i < node.annotations.length; i++) {
-      node.annotations[i].style = {
-        color: 'white',
-        fill: 'transparent',
-      };
-    }
+    // node.style = { fill: '#357BD2', strokeColor: 'white' };
+    // for (let i: number = 0; i < node.annotations.length; i++) {
+    //   node.annotations[i].style = {
+    //     color: 'white',
+    //     fill: 'transparent',
+    //   };
+    // }
     node.ports = getPorts(node);
     return node;
   }
+
   public connDefaults(obj: Connector): void {
     if (obj.id.indexOf('connector') !== -1) {
       obj.targetDecorator = { shape: 'Arrow', width: 10, height: 10 };
@@ -120,43 +142,44 @@ export class AppComponent {
   public symbolMargin: MarginModel = { left: 15, right: 15, top: 15, bottom: 15 };
   public expandMode: ExpandMode = 'Multiple';
   //Initialize the flowshapes for the symbol palatte
+  const htmlrepair: string = '<div style="background-color: #EEF2FF; border-radius: 8px; padding: 10px;"><div style="font-size: 18px; font-weight: bold;">Repair Status Change</div><div style="font-size: 14px; margin-top: 8px;">States changed to</div></div>'
   private flowshapes: NodeModel[] = [
-    { id: 'Terminator', shape: { type: 'Flow', shape: 'Terminator' } },
-    { id: 'Process', shape: { type: 'Flow', shape: 'Process' } },
-    { id: 'Decision', shape: { type: 'Flow', shape: 'Decision' } },
-    { id: 'Document', shape: { type: 'Flow', shape: 'Document' } },
-    { id: 'PreDefinedProcess', shape: { type: 'Flow', shape: 'PreDefinedProcess' } },
-    { id: 'PaperTap', shape: { type: 'Flow', shape: 'PaperTap' } },
-    { id: 'DirectData', shape: { type: 'Flow', shape: 'DirectData' } },
-    { id: 'SequentialData', shape: { type: 'Flow', shape: 'SequentialData' } },
-    { id: 'Sort', shape: { type: 'Flow', shape: 'Sort' } },
-    { id: 'MultiDocument', shape: { type: 'Flow', shape: 'MultiDocument' } },
-    { id: 'Collate', shape: { type: 'Flow', shape: 'Collate' } },
-    { id: 'SummingJunction', shape: { type: 'Flow', shape: 'SummingJunction' } },
-    { id: 'Or', shape: { type: 'Flow', shape: 'Or' } },
-    {
-      id: 'InternalStorage',
-      shape: { type: 'Flow', shape: 'InternalStorage' }
-    },
-    { id: 'Extract', shape: { type: 'Flow', shape: 'Extract' } },
-    {
-      id: 'ManualOperation',
-      shape: { type: 'Flow', shape: 'ManualOperation' }
-    },
-    { id: 'Merge', shape: { type: 'Flow', shape: 'Merge' } },
-    {
-      id: 'OffPageReference',
-      shape: { type: 'Flow', shape: 'OffPageReference' }
-    },
-    {
-      id: 'SequentialAccessStorage',
-      shape: { type: 'Flow', shape: 'SequentialAccessStorage' }
-    },
-    { id: 'Annotation', shape: { type: 'Flow', shape: 'Annotation' } },
-    { id: 'Annotation2', shape: { type: 'Flow', shape: 'Annotation2' } },
-    { id: 'Data', shape: { type: 'Flow', shape: 'Data' } },
-    { id: 'Card', shape: { type: 'Flow', shape: 'Card' } },
-    { id: 'Delay', shape: { type: 'Flow', shape: 'Delay' } }
+    // { id: 'Terminator', shape: { type: 'Flow', shape: 'Terminator' } },
+    // { id: 'Process', shape: { type: 'Flow', shape: 'Process' } },
+    // { id: 'Decision', shape: { type: 'Flow', shape: 'Decision' } },
+    // { id: 'Document', shape: { type: 'Flow', shape: 'Document' } },
+    // { id: 'PreDefinedProcess', shape: { type: 'Flow', shape: 'PreDefinedProcess' } },
+    // { id: 'PaperTap', shape: { type: 'Flow', shape: 'PaperTap' } },
+    // { id: 'DirectData', shape: { type: 'Flow', shape: 'DirectData' } },
+    // { id: 'SequentialData', shape: { type: 'Flow', shape: 'SequentialData' } },
+    // { id: 'Sort', shape: { type: 'Flow', shape: 'Sort' } },
+    // { id: 'MultiDocument', shape: { type: 'Flow', shape: 'MultiDocument' } },
+    // { id: 'Collate', shape: { type: 'Flow', shape: 'Collate' } },
+    // { id: 'SummingJunction', shape: { type: 'Flow', shape: 'SummingJunction' } },
+    // { id: 'Or', shape: { type: 'Flow', shape: 'Or' } },
+    // {
+    //   id: 'InternalStorage',
+    //   shape: { type: 'Flow', shape: 'InternalStorage' }
+    // },
+    // { id: 'Extract', shape: { type: 'Flow', shape: 'Extract' } },
+    // {
+    //   id: 'ManualOperation',
+    //   shape: { type: 'Flow', shape: 'ManualOperation' }
+    // },
+    // { id: 'Merge', shape: { type: 'Flow', shape: 'Merge' } },
+    // {
+    //   id: 'OffPageReference',
+    //   shape: { type: 'Flow', shape: 'OffPageReference' }
+    // },
+    // {
+    //   id: 'SequentialAccessStorage',
+    //   shape: { type: 'Flow', shape: 'SequentialAccessStorage' }
+    // },
+    // { id: 'Annotation', shape: { type: 'Flow', shape: 'Annotation' } },
+    // { id: 'Annotation2', shape: { type: 'Flow', shape: 'Annotation2' } },
+    // { id: 'Data', shape: { type: 'Flow', shape: 'Data' } },
+    // { id: 'Card', shape: { type: 'Flow', shape: 'Card' } },
+    // { id: 'Delay', shape: { type: 'Flow', shape: 'Delay' } },
   ];
 
   //Initializes connector symbols for the symbol palette
@@ -203,7 +226,32 @@ export class AppComponent {
     }
   ];
 
+  private nodes: NodeModel[] = [
+    {
+      id: "Repair1",
+      shape: {
+        type: "HTML",
+        content:
+          '<p-button label="Submit">Hello</p-button>'
+      }
+    },
+    {
+      id: "Repair",
+      shape: {
+        type: "HTML",
+        content:
+          '<div style="background-color: #EEF2FF; border-radius: 8px; padding: 10px;"><div style="font-size: 18px; font-weight: bold;">Repair Status Change</div><div style="font-size: 14px; margin-top: 8px;">States changed to</div><p-dropdown placeholder="In Progress"></p-dropdown></div>'
+      }
+    }
+  ];
   public palettes: PaletteModel[] = [
+    {
+      id: "html",
+      expanded: true,
+      symbols: this.nodes,
+      iconCss: "shapes",
+      title: "HTML Shapes"
+    },
     {
       id: 'flow',
       expanded: true,
