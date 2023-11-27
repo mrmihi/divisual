@@ -20,7 +20,7 @@
         - name: Deploy 🚀
           uses: JamesIves/github-pages-deploy-action@v4
           with:
-            folder: ./dist/chat/browser
+            folder: ./dist/divisual/browser
             branch: gh-pages
             clean-exclude: preview
   
