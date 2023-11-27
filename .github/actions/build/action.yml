@@ -15,5 +15,5 @@ runs:
       shell: bash
 
     - name: Build changes
-      run: npm build
+      run: npm run build
       shell: bash
