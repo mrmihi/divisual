@@ -22,6 +22,7 @@
     "@syncfusion/ej2-angular-inputs": "^23.2.4",
     "@syncfusion/ej2-angular-navigations": "^23.2.5",
     "@syncfusion/ej2-angular-splitbuttons": "^23.2.4",
+    "primeng": "^17.0.0-beta.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
